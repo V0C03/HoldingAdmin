@@ -1,6 +1,3 @@
--- credits to legendary#0001
--- https://goonlinetools.com/lua-beautifier/ is really cool
-
 --[ Notification System ]
 function notification(x, y, time)
     game.StarterGui:SetCore(
