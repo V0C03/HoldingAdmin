@@ -1,6 +1,3 @@
--- credits to legendary#0001
--- https://goonlinetools.com/lua-beautifier/ is really cool
-
 --[ Notification System ]
 function notification(x, y, time)
     game.StarterGui:SetCore(
@@ -21,7 +18,7 @@ game:service [[StarterGui]]:SetCore(
     }
 )
 task.wait(3)
-notification("For Commands, Press F9", "Kekware v1.02 (>cmds)", 2)
+notification("For Commands, Press F9", "HoldingAdmin (!cmds)", 2)
 
 --[  Functions  ]
 
