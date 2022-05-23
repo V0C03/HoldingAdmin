@@ -69,7 +69,7 @@ end
 
 --[ Local Variables ]
 local plr = game.Players.LocalPlayer
-local Prefix = ">"
+local Prefix = "!"
 local TP = game:GetService [[TeleportService]]
 local Service = game:GetService [[Players]]
 local LP = game:GetService [[Players]].LocalPlayer
@@ -245,7 +245,7 @@ plr.Chatted:Connect(
             function(message)
                 local loweredString = string.lower(message)
                 local args = string.split(loweredString, " ")
-                if args[1] == Prefix .. [[legrescale]] then
+                if args[1] == Prefix .. [[leg]] then
                     game.Players.LocalPlayer.Character.LeftLowerLeg.LeftKneeRigAttachment.OriginalPosition:Destroy()
                     game.Players.LocalPlayer.Character.LeftUpperLeg.LeftKneeRigAttachment.OriginalPosition:Destroy()
                     game.Players.LocalPlayer.Character.LeftLowerLeg:WaitForChild "LeftKneeRigAttachment":Destroy()
@@ -628,6 +628,224 @@ plr.Chatted:Connect(
                     end
                 )
             end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(msg)
+        local args = msg:lower():split(" ")
+        print(args[1], args[2])
+        if args[1] == Prefix .. "to" then
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v.Character then
+                    if
+                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
+                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
+                     then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+                    end
+                end
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(msg)
+        local args = msg:lower():split(" ")
+        print(args[1], args[2])
+        if args[1] == Prefix .. "void" then
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v.Character then
+                    if
+                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
+                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
+                     then
+                        local LocalPlayer = game.Players.LocalPlayer
+                        local Character = LocalPlayer.Character
+                        local ClonedPlayer = Character.Humanoid:Clone()
+                        wait()
+                        v.Character.Humanoid:SetStateEnabled("Seated", true)
+                        v.Character.Humanoid.Sit = false
+                        prev = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame
+                        ClonedPlayer.Parent = Character
+                        Character.Humanoid:Destroy()
+
+                        for i, v in next, LocalPlayer.Backpack:GetChildren() do
+                            if v:IsA("Tool") then
+                                v.Parent = Character
+                            end
+                        end
+
+                        local Tool = Character:FindFirstChildOfClass("Tool")
+
+                        firetouchinterest(Tool.Handle, v.Character["Head"], 0)
+
+                        game:GetService("RunService").Heartbeat:wait()
+
+                        game.Workspace["FallenPartsDestroyHeight"] = 0 / 0
+                        game.Workspace["Gravity"] = 1e5
+                        Character["HumanoidRootPart"].CFrame =
+                            Character["HumanoidRootPart"].CFrame - Vector3.new(0, 1e5, 0)
+                        Character.HumanoidRootPart.Velocity = Vector3.new(0, -9e9, 0)
+
+                        wait(0.20)
+                        Character:Destroy()
+                        game.Players.LocalPlayer.CharacterAdded:Wait()
+
+                        game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+                        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = prev
+                    end
+                end
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(msg)
+        local args = msg:lower():split(" ")
+        print(args[1], args[2])
+        if args[1] == Prefix .. "void2" then
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v.Character then
+                    if
+                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
+                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
+                     then
+                        local LocalPlayer = game.Players.LocalPlayer
+                        local newHum = LocalPlayer.Character.Humanoid:Clone()
+                        newHum.Parent = LocalPlayer.Character
+                        LocalPlayer.Character.Humanoid:Destroy()
+                        for i, v in next, LocalPlayer.Backpack:GetChildren() do
+                            if v:IsA "Tool" then
+                                v.Parent = LocalPlayer.Character
+                            end
+                        end
+                        local tool = LocalPlayer.Character:FindFirstChildOfClass "Tool"
+                        local pos = LocalPlayer.Character.HumanoidRootPart.CFrame
+                        firetouchinterest(tool.Handle, v.Character.Head, 0)
+                        task.wait()
+                        game.Workspace.Gravity = 5000000000000000000
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame - Vector3.new(0, 400, 0)
+                        task.wait()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0, -1000, 0)
+                        game.Players.LocalPlayer.CharacterAdded:Wait()
+                        repeat
+                            task.wait()
+                        until LocalPlayer.Character
+                        game.Workspace.Gravity = 200
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+                    end
+                end
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[skinny]] then
+            local LocalPlayer = game:GetService("Players").LocalPlayer
+            local Character = LocalPlayer.Character
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+
+            function rm()
+                for i, v in pairs(Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        if v.Name == "Handle" or v.Name == "Head" then
+                            if Character.Head:FindFirstChild("OriginalSize") then
+                                Character.Head.OriginalSize:Destroy()
+                            end
+                        else
+                            for i, cav in pairs(v:GetDescendants()) do
+                                if cav:IsA("Attachment") then
+                                    if cav:FindFirstChild("OriginalPosition") then
+                                        cav.OriginalPosition:Destroy()
+                                    end
+                                end
+                            end
+                            v:FindFirstChild("OriginalSize"):Destroy()
+                            if v:FindFirstChild("AvatarPartScaleType") then
+                                v:FindFirstChild("AvatarPartScaleType"):Destroy()
+                            end
+                        end
+                    end
+                end
+            end
+
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+            wait(1)
+
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+            wait(1)
+
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+            wait(1)
+
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+            wait(1)
+
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("HeadScale"):Destroy()
+            wait(1)
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[tiny]] then
+            local LocalPlayer = game:GetService("Players").LocalPlayer
+            local Character = LocalPlayer.Character
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+
+            local function rm()
+                for i, v in pairs(Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        if v.Name ~= "Head" then
+                            for i, cav in pairs(v:GetDescendants()) do
+                                if cav:IsA("Attachment") then
+                                    if cav:FindFirstChild("OriginalPosition") then
+                                        cav.OriginalPosition:Destroy()
+                                    end
+                                end
+                            end
+                            v:FindFirstChild("OriginalSize"):Destroy()
+                            if v:FindFirstChild("AvatarPartScaleType") then
+                                v:FindFirstChild("AvatarPartScaleType"):Destroy()
+                            end
+                        end
+                    end
+                end
+            end
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyTypeScale"):Destroy()
+            wait(1)
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+            wait(1)
+            rm()
+            wait(0.5)
+            Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+            wait(1)
+            rm()
+            wait()
+            wait(0.5)
+            Humanoid:FindFirstChild("HeadScale"):Destroy()
+            wait(1)
         end
     end
 )
