@@ -1,3 +1,6 @@
+-- credits to legendary#0001
+-- https://goonlinetools.com/lua-beautifier/ is really cool
+
 --[ Notification System ]
 function notification(x, y, time)
     game.StarterGui:SetCore(
@@ -843,6 +846,79 @@ plr.Chatted:Connect(
             wait(0.5)
             Humanoid:FindFirstChild("HeadScale"):Destroy()
             wait(1)
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[noclip]] then
+            game.Players.LocalPlayer.Character:findFirstChildOfClass("Humanoid"):ChangeState(11)
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[clip]] then
+            game.Players.LocalPlayer.Character:findFirstChildOfClass("Humanoid"):ChangeState(0)
+        end
+    end
+)
+
+plr.Chatted:Connect(
+    function(msg)
+        local args = msg:lower():split(" ")
+        print(args[1], args[2])
+        if args[1] == Prefix .. "prison" then
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v.Character then
+                    if
+                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
+                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
+                     then
+                        local pooCF =
+                            CFrame.new(
+                            5495.021,
+                            32.9004288,
+                            -17077.1211,
+                            0.0680412427,
+                            8.60141398e-08,
+                            0.997682512,
+                            7.76645805e-08,
+                            1,
+                            -9.15106142e-08,
+                            -0.997682512,
+                            8.37110932e-08,
+                            0.0680412427
+                        )
+                        local oldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
+                        local newHum = LocalPlayer.Character.Humanoid:Clone()
+                        newHum.Parent = LocalPlayer.Character
+                        LocalPlayer.Character.Humanoid:Destroy()
+                        local tool = game.Players.LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
+                        tool.Handle.Massless = true
+                        tool.Parent = game.Players.LocalPlayer.Character
+                        DeltaWait()
+                        firetouchinterest(tool.Handle, v.Character["Head"], 0)
+                        repeat
+                            DeltaWait()
+                        until tool.Parent ~= LocalPlayer.Character
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pooCF
+                        wait(.5)
+                        LocalPlayer.Character:BreakJoints()
+                        wait(.05)
+                        LocalPlayer.CharacterAdded:Wait()
+                        repeat
+                            DeltaWait(0)
+                        until LocalPlayer.Character.HumanoidRootPart
+                        wait(.5)
+                        LocalPlayer.Character.HumanoidRootPart.CFrame = oldCF
+                    end
+                end
+            end
         end
     end
 )
