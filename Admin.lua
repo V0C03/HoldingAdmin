@@ -919,3 +919,197 @@ plr.Chatted:Connect(
         end
     end
 )
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[Check]] then
+            game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild(
+                "SayMessageRequest"
+            ):FireServer("HoldingAdmin is Active", "All")
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[noclip]] then
+            local LP = game.Players.LocalPlayer
+            local CHR = LP.Character
+            while true do
+                for i, v in pairs(CHR:GetDescendants()) do
+                    pcall(
+                        function()
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                            end
+                        end
+                    )
+                end
+                game:GetService("RunService").Stepped:wait()
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[clip]] then
+            local LP = game.Players.LocalPlayer
+            local CHR = LP.Character
+            while false do
+                for i, v in pairs(CHR:GetDescendants()) do
+                    pcall(
+                        function()
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                            end
+                        end
+                    )
+                end
+                game:GetService("RunService").Stepped:wait()
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[slender]] then
+            function rm()
+                for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        if v.Name == "Handle" or v.Name == "Head" then
+                            if game.Players.LocalPlayer.Character.Head:FindFirstChild("OriginalSize") then
+                                game.Players.LocalPlayer.Character.Head.OriginalSize:Destroy()
+                            end
+                        else
+                            v:FindFirstChild("OriginalSize"):Destroy()
+                            if v:FindFirstChild("AvatarPartScaleType") then
+                            end
+                        end
+                    end
+                end
+            end
+            rm()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+            wait(1)
+            rm()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+            wait(1)
+            rm()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+            wait(1)
+            rm()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+            wait(1)
+            rm()
+            wait()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("HeadScale"):Destroy()
+            wait(1)
+            rm()
+            wait()
+            wait(0.5)
+            game.Players.LocalPlayer.Character.Humanoid:FindFirstChild("BodyTypeScale"):Destroy()
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[scare]] then
+            local oldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
+            distancepl = 2
+            if v.Character and v.Character:FindFirstChild("Humanoid") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame =
+                    v.Character.HumanoidRootPart.CFrame + v.Character.HumanoidRootPart.CFrame.lookVector * distancepl
+                LocalPlayer.Character.HumanoidRootPart.CFrame =
+                    CFrame.new(LocalPlayer.Character.HumanoidRootPart.Position, v.Character.HumanoidRootPart.Position)
+                wait(.5)
+                LocalPlayer.Character.HumanoidRootPart.CFrame = oldCF
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(message)
+        local loweredString = string.lower(message)
+        local args = string.split(loweredString, " ")
+        if args[1] == Prefix .. [[cod]] then
+            local LP = game.Players.LocalPlayer
+            for i, v in next, LP.Character.Humanoid:GetChildren() do
+                if v:IsA "NumberValue" then
+                    v:Destroy()
+                    task.wait()
+                end
+            end
+        end
+    end
+)
+plr.Chatted:Connect(
+    function(msg)
+        local args = msg:lower():split(" ")
+        print(args[1], args[2])
+        if args[1] == Prefix .. "prison" then
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v.Character then
+                    if
+                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
+                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
+                     then
+                        local pooCF =
+                            CFrame.new(
+                            5616.67969,
+                            37.0454788,
+                            -17259.5176,
+                            0.999995291,
+                            -6.67297755e-08,
+                            0.00300924503,
+                            6.65793536e-08,
+                            1,
+                            5.00816135e-08,
+                            -0.00300924503,
+                            -4.98810273e-08,
+                            0.999995291
+                        )
+                        local oldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
+                        local newHum = LocalPlayer.Character.Humanoid:Clone()
+                        newHum.Parent = LocalPlayer.Character
+                        LocalPlayer.Character.Humanoid:Destroy()
+                        local tool = game.Players.LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
+                        tool.Handle.Massless = true
+                        tool.Parent = game.Players.LocalPlayer.Character
+                        DeltaWait()
+                        firetouchinterest(tool.Handle, v.Character["Head"], 0)
+                        repeat
+                            DeltaWait()
+                        until tool.Parent ~= LocalPlayer.Character
+                        for i = 1, 35, 1 do
+                            print("pee" .. i)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 9e+18, 0)
+                            wait(.05)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldCF
+                            wait(.05)
+                        end
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldCF
+                        LocalPlayer.CharacterAdded:Wait()
+                        repeat
+                            DeltaWait(0)
+                        until LocalPlayer.Character.HumanoidRootPart
+                        wait(.5)
+                        LocalPlayer.Character.HumanoidRootPart.CFrame = oldCF
+                    end
+                end
+            end
+        end
+    end
+)
