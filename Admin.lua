@@ -1059,7 +1059,7 @@ plr.Chatted:Connect(
     function(msg)
         local args = msg:lower():split(" ")
         print(args[1], args[2])
-        if args[1] == Prefix .. "prison" then
+        if args[1] == Prefix .. "attack" then
             for i, v in pairs(game:GetService("Players"):GetPlayers()) do
                 if v.Character then
                     if
