@@ -20,6 +20,18 @@ local vis = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoldingRe
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 Admin2.addCommand({name = "dmap",desc = "hi!",callback = function(v)
 -- Name
 local Part = "Model"
@@ -33,6 +45,13 @@ v:Destroy()
 end
 end
 end})
+
+
+
+
+
+
+
 
 
 
@@ -70,14 +89,51 @@ Admin2.addCommand({name = "antitool",desc = "hi!",callback = function(bool)
     end)
 end})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Admin2.addCommand({name = "sit",desc = "hi",callback = function(c)
     game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
     game.Players.LocalPlayer.Character.Humanoid.Sit = true
 end})
-Admin2.addCommand({name = "sit",desc = "hi",callback = function(c)
-    game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
-    game.Players.LocalPlayer.Character.Humanoid.Sit = true
+Admin2.addCommand({name = "chat",desc = "hi",callback = function(c)
+    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(c,"All")
+
 end})
+
+
+
+Admin2.addCommand({name = "walkspeed",desc = "hi",callback = function(c)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = c
+
+end})
+
+Admin2.addCommand({name = "bodyvelocity",desc = "hi",callback = function(c)
+    Instance.new("BodyVelocity",game.Players.LocalPlayer.Character.HumanoidRootPart)local a=game:GetService("UserInputService")local b=false a.InputBegan:Connect(function(a)if(a.KeyCode==Enum.KeyCode.W)then b=true while b do local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(123123,123123,123123)a.Velocity=Vector3.new(0,0,0)+game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.LookVector*50 wait(0.2)end end end)a.InputEnded:Connect(function(a)if(a.KeyCode==Enum.KeyCode.W)then b=false local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(0,0,0)a.Velocity=Vector3.new(0,0,0)end end)local b=false a.InputBegan:Connect(function(a)if(a.KeyCode==Enum.KeyCode.Space)then b=true while b do local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(123123,123123,123123)a.Velocity=Vector3.new(0,25,0)wait(0.2)end end end)a.InputEnded:Connect(function(a)if(a.KeyCode==Enum.KeyCode.Space)then b=false local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(0,0,0)a.Velocity=Vector3.new(0,0,0)end end)local b=false a.InputBegan:Connect(function(a)if(a.KeyCode==Enum.KeyCode.S)then b=true while b do local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(123123,123123,123123)a.Velocity=Vector3.new(0,0,0)-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.LookVector*50 wait(0.2)end end end)a.InputEnded:Connect(function(a)if(a.KeyCode==Enum.KeyCode.W)then b=false local a=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity")a.MaxForce=Vector3.new(math.huge,math.huge,math.huge)a.Velocity=Vector3.new(0,0,0)end end)
+
+end})
+
+
 
 
 Admin2.addCommand({name = "closeroblox",desc = "hi",callback = function(c)
@@ -223,6 +279,11 @@ Admin2.addCommand({name = "rejoin",desc = "Rejoin Same Server",callback = functi
 end})
 
 
+Admin2.addCommand({name = "rejoin",desc = "Rejoin Same Server",callback = function(e)
+
+end})
+
+
 Admin2.addCommand({name = "shop",desc = "hi",callback = function(e)
     local PlaceID = game.PlaceId
     local AllIDs = {}
@@ -292,8 +353,6 @@ Admin2.addCommand({name = "shop",desc = "hi",callback = function(e)
             end)
         end
     end
-    
-    -- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
     Teleport()
 
 end})
@@ -359,11 +418,32 @@ end})
 
 
 
-Admin2.addCommand({name = "goto",desc = "teleports you to the target!",callback = function(v,b)
+Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
     local t = Admin2.getplayers(v)
     for i,v2 in pairs(t) do
         pcall(function()
-                        workspace.CurrentCamera.CameraSubject = v2.Character.Humanoid
+            game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+            game.Players.LocalPlayer.Character.Humanoid.Sit = true
+            
+            newHum.Parent = LocalPlayer.Character
+            LocalPlayer.Character.Humanoid:Destroy()
+
+
+            for i,v in next, LocalPlayer.Backpack:GetChildren() do
+                if v:IsA'Tool' then
+                    v.Parent = LocalPlayer.Character
+                end
+            end
+            local tool = LocalPlayer.Character:FindFirstChildOfClass'Tool'
+            firetouchinterest(tool.Handle, v2.Character.Head, 0)
+            local BP = Instance.new("BodyPosition", game.Players.LocalPlayer.Character.HumanoidRootPart)
+            BP.Position = Vector3.new(0, -4500, 0)
+            BP.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            BP.P = 6000
+            
+            game.Players.LocalPlayer.CharacterAdded:Wait()
+            game.Players.LocalPlayer.Character:WaitForChild'ForceField':Destroy()
+            game.Players.LocalPlayer.Character:WaitForChild('HumanoidRootPart').CFrame = saveCF
 
         end)
     end
