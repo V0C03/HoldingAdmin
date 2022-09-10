@@ -1,13 +1,7 @@
-print[[
- __ __   ___   _      ___    ____  ____    ____   ____  ___    ___ ___  ____  ____  
-|  |  | /   \ | |    |   \  |    ||    \  /    | /    ||   \  |   |   ||    ||    \ 
-|  |  ||     || |    |    \  |  | |  _  ||   __||  o  ||    \ | _   _ | |  | |  _  |
-|  _  ||  O  || |___ |  D  | |  | |  |  ||  |  ||     ||  D  ||  \_/  | |  | |  |  |
-|  |  ||     ||     ||     | |  | |  |  ||  |_ ||  _  ||     ||   |   | |  | |  |  |
-|  |  ||     ||     ||     | |  | |  |  ||     ||  |  ||     ||   |   | |  | |  |  |
-|__|__| \___/ |_____||_____||____||__|__||___,_||__|__||_____||___|___||____||__|__|
-                                                                                    ]]
-																					
+repeat task.wait() until game:IsLoaded()
+local Admin = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoldingRecord/AdminModule/main/module"))()
+local Admin2 = Admin.load(getgenv().themes.dark, "Hold Personal Admin", true)
+local vis = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoldingRecord/Scripts/main/autoload.lua"))()
 
 
 
@@ -26,213 +20,392 @@ print[[
 
 
 
+Admin2.addCommand({name = "dmap",desc = "hi!",callback = function(v)
+-- Name
+local Part = "Model"
+local Part = "Part"
 
---lOCAL STUFF
+-- Script
+local femboy = game:GetDescendants()
+for i = 1, #femboy do local v = femboy[i]
+if v.Name == Part then
+v:Destroy()
+end
+end
+end})
 
-local plr = game.Players.LocalPlayer
-local Prefix = "!"
-local TP = game:GetService [[TeleportService]]
-local Service = game:GetService [[Players]]
-local LP = game:GetService [[Players]].LocalPlayer
-local CF = game:GetService [[Players]].LocalPlayer.Character.HumanoidRootPart.CFrame
-local chr = game.Players.LocalPlayer.Character
-local Tool = plr.Backpack:FindFirstChildOfClass("Tool")
-local Humanoid = plr.Character.Humanoid:Clone()
 
--- commands
 
---Admin
-plr.Chatted:Connect(
-    function(message)
-        local loweredString = string.lower(message)
-        local args = string.split(loweredString, " ")
 
-        if args[1] == Prefix .. [[script]] then
-            wait(1)
-            local msg =
-                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                "HoldingAdmin Runs Dollhouse",
-                "all"
-            )
-        end
+
+
+
+
+
+
+Admin2.addCommand({name = "antitool",desc = "hi!",callback = function(bool)
+    local AcceptedTools = {}
+    local player = game.Players.LocalPlayer
+    
+    for i,v in pairs(player.Backpack:GetChildren()) do
+    table.insert(AcceptedTools,v)
     end
-)
---Reset And Bring You Back Where You Died
-
-plr.Chatted:Connect(
-    function(message)
-        local loweredString = string.lower(message)
-        local args = string.split(loweredString, " ")
-
-        if args[1] == Prefix .. [[reset]] then
-		            game:service [[StarterGui]]:SetCore(
-                [[SendNotification]],
-                {
-                    Title = [[Refreshing]],
-                    Text = [[Slapped ur Character]]
-                }
-				wait()
-            local CF = Service.LocalPlayer.Character.HumanoidRootPart.CFrame
-            local chr = game.Players.LocalPlayer.Character
-            for i, v in next, chr:GetDescendants() do
-                if v:IsA [[Part]] and v.Name == [[HumanoidRootPart]] then
-                end
-            end
-            chr.Parent = nil
-            chr.Humanoid:Destroy()
-            for i, v in pairs(LP.Character:GetChildren()) do
-                if v:IsA [[MeshPart]] then
-                    v.Anchored = true
-                end
-            end
-            LP.CharacterAdded:wait()
-            LP.Character:WaitForChild [[HumanoidRootPart]].CFrame = CF
-            local FF = LP.Character:WaitForChild [[ForceField]]
-            FF:Destroy()
-            task.wait()
-            game:service [[StarterGui]]:SetCore(
-                [[SendNotification]],
-                {
-                    Title = [[Resetted]],
-                    Text = [[Character is now good]]
-                }
-            )
-        end
+    
+    player.Backpack.ChildAdded:Connect(function(t)
+    table.insert(AcceptedTools, t)
+    end)
+    
+    player.Character.ChildAdded:Connect(function(t)
+    if t:IsA("Tool") then
+    local accepted = false
+    for i,v in pairs(AcceptedTools) do
+    if t == v then
+    accepted = true
     end
-)
+    end
+    if not accepted then
+    t:Destroy()
+    end
+    end
+    end)
+end})
 
--- BRING
+Admin2.addCommand({name = "sit",desc = "hi",callback = function(c)
+    game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+    game.Players.LocalPlayer.Character.Humanoid.Sit = true
+end})
+Admin2.addCommand({name = "sit",desc = "hi",callback = function(c)
+    game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+    game.Players.LocalPlayer.Character.Humanoid.Sit = true
+end})
 
-plr.Chatted:Connect(
-    function(msg)
-        local args = msg:lower():split(" ")
-        print(args[1], args[2])
-        if args[1] == Prefix .. "bring" then
-            for i, v in pairs(Service:GetPlayers()) do
-                if v.Character then
-                    if
-                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
-                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
-                     then
-                        local CF = game:GetService [[Players]].LocalPlayer.Character.HumanoidRootPart.CFrame
-                        local Tool = plr.Backpack:FindFirstChildOfClass("Tool")
-                        plr.Character.Humanoid:Destroy()
-                        Humanoid.Parent = plr.Character
-                        task.wait(Service.RespawnTime - 0.3)
-                        Tool.Parent = plr.Character
-                        firetouchinterest(Tool.Handle, v.Character.HumanoidRootPart, 0)
-                        LP.CharacterAdded:wait()
-                        LP.Character:WaitForChild [[HumanoidRootPart]].CFrame = CF
-                        local FF = LP.Character:WaitForChild [[ForceField]]
-                        FF:Destroy()
-                    end
-                end
+
+Admin2.addCommand({name = "closeroblox",desc = "hi",callback = function(c)
+    game:Shutdown() 
+end})
+
+
+
+Admin2.addCommand({name = "long",desc = "hi",callback = function(c)
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+    local Character = LocalPlayer.Character
+    local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+    
+    local function rm()
+       for i,v in pairs(Character:GetDescendants()) do
+           if v:IsA("BasePart") then
+               if v.Name ~= "Head" then
+                   for i,cav in pairs(v:GetDescendants()) do
+                       if cav:IsA("Attachment") then
+                           if cav:FindFirstChild("OriginalPosition") then
+                               cav.OriginalPosition:Destroy()
+                           end
+                       end
+                   end
+                   v:FindFirstChild("OriginalSize"):Destroy()
+                   if v:FindFirstChild("AvatarPartScaleType") then
+                       v:FindFirstChild("AvatarPartScaleType"):Destroy()
+                   end
+               end
+           end
+       end
+    end
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyTypeScale"):Destroy()
+    wait(1)
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+    wait(1)
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+    wait(1)
+    rm()
+    wait()
+    wait(0.5)
+    Humanoid:FindFirstChild("HeadScale"):Destroy()
+    wait(1)
+
+
+end})
+
+
+
+
+
+
+
+
+
+Admin2.addCommand({name = "Reset",desc = "Refresh",callback = function(c)
+    local LP = game:GetService('Players').LocalPlayer
+
+    local ogChar = LP.Character
+    LP.Character = Clone
+    LP.Character = ogChar
+    wait(4.9)
+    local pos = LP.Character.HumanoidRootPart.CFrame
+    LP.Character:Destroy()
+    LP.CharacterAdded:wait();
+    repeat
+        wait()
+    until LP.Character
+    wait(.2)
+    LP.Character.HumanoidRootPart.CFrame = pos + Vector3.new(0,1,0)
+end})
+
+
+Admin2.addCommand({name = "script",desc = "hi",callback = function(b)
+    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer("Hold Personal Admin (v2) HoldingRecord 1571","All")
+
+end})
+
+
+
+Admin2.addCommand({name = "r2",desc = "hi",callback = function(b)
+    local LP = game:GetService('Players').LocalPlayer
+    local cf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    local player = game.Players.LocalPlayer
+    if player.Character then
+    if player.Character:FindFirstChild("Humanoid") then
+    player.Character.Humanoid.Name = "1"
+    end
+    local l = player.Character["1"]:Clone()
+    l.Parent = player.Character
+    l.Name = "Humanoid"; wait(0.1)
+    player.Character["1"]:Destroy()
+    workspace.CurrentCamera.CameraSubject = player.Character.Humanoid
+    player.Character.Animate.Disabled = true; wait(0.1)
+    player.Character.Animate.Disabled = false
+    game.Players.LocalPlayer.CharacterAdded:Wait()
+    game.Players.LocalPlayer.Character:WaitForChild "ForceField":Destroy()
+    LP.Character.HumanoidRootPart.CFrame = pos + Vector3.new(0,1,0)
+    end
+end})
+
+
+Admin2.addCommand({name = "re3",desc = "hi",callback = function(b)
+
+end})
+
+
+Admin2.addCommand({name = "coins",desc = "hi",callback = function(b)
+    for i = 1, 1000 do
+        for i = 1, 100 do
+            for i = 1, 10 do
+                game.ReplicatedStorage.ClaimReward:FireServer()
             end
         end
+     end
+end})
+
+
+Admin2.addCommand({name = "antiafk",desc = "hi",callback = function(b)
+    for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
+        v:Disable()
+        end
+end})
+
+
+Admin2.addCommand({name = "dhrp",desc = "hi",callback = function(b)
+    local c = game.Players.LocalPlayer.Character
+    c.Parent = nil
+    c.HumanoidRootPart:Destroy()
+    c.Parent = game.workspace
+end})
+
+
+Admin2.addCommand({name = "rejoin",desc = "Rejoin Same Server",callback = function(e)
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+
+end})
+
+
+Admin2.addCommand({name = "shop",desc = "hi",callback = function(e)
+    local PlaceID = game.PlaceId
+    local AllIDs = {}
+    local foundAnything = ""
+    local actualHour = os.date("!*t").hour
+    local Deleted = false
+    local File = pcall(function()
+        AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+    end)
+    if not File then
+        table.insert(AllIDs, actualHour)
+        writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
     end
-)
---VOID
-plr.Chatted:Connect(
-    function(msg)
-        local args = msg:lower():split(" ")
-        print(args[1], args[2])
-        if args[1] == Prefix .. "Void" then
-            for i, v in pairs(Service:GetPlayers()) do
-                if v.Character then
-                    if
-                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
-                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
-                     then
-                        
+    function TPReturner()
+        local Site;
+        if foundAnything == "" then
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        else
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+        end
+        local ID = ""
+        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+            foundAnything = Site.nextPageCursor
+        end
+        local num = 0;
+        for i,v in pairs(Site.data) do
+            local Possible = true
+            ID = tostring(v.id)
+            if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                for _,Existing in pairs(AllIDs) do
+                    if num ~= 0 then
+                        if ID == tostring(Existing) then
+                            Possible = false
+                        end
+                    else
+                        if tonumber(actualHour) ~= tonumber(Existing) then
+                            local delFile = pcall(function()
+                                delfile("NotSameServers.json")
+                                AllIDs = {}
+                                table.insert(AllIDs, actualHour)
+                            end)
                         end
                     end
+                    num = num + 1
+                end
+                if Possible == true then
+                    table.insert(AllIDs, ID)
+                    wait()
+                    pcall(function()
+                        writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                        wait()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                    end)
+                    wait(4)
                 end
             end
         end
     end
-)
+    
+    function Teleport()
+        while wait() do
+            pcall(function()
+                TPReturner()
+                if foundAnything ~= "" then
+                    TPReturner()
+                end
+            end)
+        end
+    end
+    
+    -- If you'd like to use a script before server hopping (Like a Automatic Chest collector you can put the Teleport() after it collected everything.
+    Teleport()
 
--------------------------------------------------------------------------------------------------------------------------
---ToolKill
-plr.Chatted:Connect(
-    function(msg)
-        local args = msg:lower():split(" ")
-        print(args[1], args[2])
-        if args[1] == Prefix .. "tkill" then
-            for i, v in pairs(Service:GetPlayers()) do
-                if v.Character then
-                    if
-                        v.Name:lower():sub(1, #args[2]) == args[2]:lower() or
-                            v.DisplayName:lower():sub(1, #args[2]) == args[2]:lower()
-                     then
-local Player = game.Players.LocalPlayer
-                        local LP = game:GetService [[Players]].LocalPlayer
-                        local CF = game:GetService [[Players]].LocalPlayer.Character.HumanoidRootPart.CFrame
-                        local Character = Player.Character
-                        local Tool = Player.Backpack:FindFirstChildOfClass("Tool")
-                        local ClonedHum = Character.Humanoid:Clone()
-                        workspace["FallenPartsDestroyHeight"] = 0 / 0
-                        ClonedHum.Parent = Character
-                        Character.Humanoid:Destroy()
-                        ClonedHum:EquipTool(Tool)
-                        firetouchinterest(Tool.Handle, v.Character.HumanoidRootPart, 0)
-                        ClonedHum:ChangeState(15)
-                        LP.CharacterAdded:wait()
-                        LP.Character:WaitForChild [[HumanoidRootPart]].CFrame = CF
-                        local FF = LP.Character:WaitForChild [[ForceField]]
-                        FF:Destroy()
-						v.CharacterAdded:task.wait()
-						game:service [[StarterGui]]:SetCore(
-                            [[SendNotification]],
-                            {
-                                Title = [[ToolKill]],
-                                Text = [[Slapped Bro HumanoidRootPart]]
-                            }
-                        )
+end})
+
+
+Admin2.addCommand({name = "rescale",desc = "hi",callback = function(z)
+    local character = game:GetService("Players").LocalPlayer.Character
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            local function wipe_parts()
+                for _, part in pairs(character:GetDescendants()) do
+                    if part:IsA("BasePart") and part.Name ~= "Head" then
+                        for _, attachment in pairs(part:GetDescendants()) do
+                            if attachment:IsA("Attachment") and attachment:FindFirstChild("OriginalPosition") then
+                                attachment.OriginalPosition:Destroy()
+                            end
+                        end
+                        part:WaitForChild("OriginalSize"):Destroy()
                     end
                 end
             end
-        end
-    end
-)
--------------------------------------------------------------------------------------------------------------------------
---rj
-plr.Chatted:Connect(
-    function(message)
-        local loweredString = string.lower(message)
-        local args = string.split(loweredString, " ")
+            wipe_parts()
+            humanoid:WaitForChild("BodyTypeScale"):Destroy()
+            wipe_parts()
+            humanoid:WaitForChild("BodyWidthScale"):Destroy()
+            wipe_parts()
+            humanoid:WaitForChild("BodyDepthScale"):Destroy()
+            wipe_parts()
+            humanoid:WaitForChild("HeadScale"):Destroy()
+            Game:GetService("Players").LocalPlayer.Character.RightFoot.OriginalSize:Destroy()
+            Game:GetService("Players").LocalPlayer.Character.RightLowerLeg.OriginalSize:Destroy()
+            Game:GetService("Players").LocalPlayer.Character.RightUpperLeg.OriginalSize:Destroy()
 
-        if args[1] == Prefix .. [[rejoin]] then
-            TP:TeleportToPlaceInstance(game.PlaceId, game.JobId, Service.LocalPlayer)
-        end
-    end
-)
---ServerHop
-plr.Chatted:Connect(
-    function(message)
-        local loweredString = string.lower(message)
-        local args = string.split(loweredString, " ")
+end})
 
-        if args[1] == Prefix .. [[Shop]] then
-            local x = {}
-            for _, v in ipairs(
-                game:GetService("HttpService"):JSONDecode(
-                    game:HttpGetAsync(
-                        "https://games.roblox.com/v1/games/" ..
-                            game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
-                    )
-                ).data
-            ) do
-                if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
-                    x[#x + 1] = v.id
-                end
-            end
-            if #x > 0 then
-                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, x[math.random(1, #x)])
-            else
-                return
-            end
-        end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Admin2.addCommand({name = "goto",desc = "teleports you to the target!",callback = function(v,b)
+    local t = Admin2.getplayers(v)
+    for i,v2 in pairs(t) do
+        pcall(function()
+                        workspace.CurrentCamera.CameraSubject = v2.Character.Humanoid
+
+        end)
     end
-)
--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if b then
+        local m = Instance.new("Message",workspace)
+        m.Text = "Cheese!"
+        wait(1)
+        m:Destroy()
+    end
+end})
+
+
+
+
+
+
+
+
+
+
