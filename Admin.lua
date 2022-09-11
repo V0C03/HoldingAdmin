@@ -122,6 +122,12 @@ Admin2.addCommand({name = "chat",desc = "hi",callback = function(c)
 end})
 
 
+Admin2.addCommand({name = "nolegs",desc = "hi",callback = function(c)
+game.Players.LocalPlayer.Character.RightLowerLeg:Remove()
+game.Players.LocalPlayer.Character.LeftLowerLeg:Remove()
+end})
+
+
 
 Admin2.addCommand({name = "walkspeed",desc = "hi",callback = function(c)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = c
@@ -422,30 +428,29 @@ Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
     local t = Admin2.getplayers(v)
     for i,v2 in pairs(t) do
         pcall(function()
-            game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
-            game.Players.LocalPlayer.Character.Humanoid.Sit = true
-            
+            local LocalPlayer = game.Players.LocalPlayer
+            local newHum = LocalPlayer.Character.Humanoid:Clone()
             newHum.Parent = LocalPlayer.Character
             LocalPlayer.Character.Humanoid:Destroy()
-
-
             for i,v in next, LocalPlayer.Backpack:GetChildren() do
                 if v:IsA'Tool' then
                     v.Parent = LocalPlayer.Character
                 end
             end
             local tool = LocalPlayer.Character:FindFirstChildOfClass'Tool'
+            local pos = LocalPlayer.Character.HumanoidRootPart.CFrame
             firetouchinterest(tool.Handle, v2.Character.Head, 0)
-            local BP = Instance.new("BodyPosition", game.Players.LocalPlayer.Character.HumanoidRootPart)
-            BP.Position = Vector3.new(0, -4500, 0)
-            BP.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-            BP.P = 6000
-            
+            task.wait()
+            game.Workspace.Gravity = 5000000000000000000
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame - Vector3.new(0,400,0)
+            task.wait()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,-1000,0)
             game.Players.LocalPlayer.CharacterAdded:Wait()
-            game.Players.LocalPlayer.Character:WaitForChild'ForceField':Destroy()
-            game.Players.LocalPlayer.Character:WaitForChild('HumanoidRootPart').CFrame = saveCF
-
-        end)
+            repeat task.wait() until LocalPlayer.Character
+            game.Workspace.Gravity = 200
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+            end)
+        
     end
 
 
@@ -454,6 +459,8 @@ Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
 
 
 
+
+    
 
 
 
