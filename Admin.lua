@@ -31,7 +31,6 @@ local vis = loadstring(game:HttpGet("https://raw.githubusercontent.com/HoldingRe
 
 
 
-
 Admin2.addCommand({name = "dmap",desc = "hi!",callback = function(v)
 -- Name
 local Part = "Model"
@@ -126,6 +125,18 @@ Admin2.addCommand({name = "nolegs",desc = "hi",callback = function(c)
 game.Players.LocalPlayer.Character.RightLowerLeg:Remove()
 game.Players.LocalPlayer.Character.LeftLowerLeg:Remove()
 end})
+
+
+Admin2.addCommand({name = "breaktool",desc = "hi",callback = function(c)
+    for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v.ClassName == "Tool" then
+            v.CanBeDropped = true
+            v.Parent = game.Players.LocalPlayer.Character
+            wait()
+            v.Parent = workspace.Terrain
+        end
+    end
+    end})
 
 
 
@@ -226,7 +237,7 @@ end})
 
 
 
-Admin2.addCommand({name = "r2",desc = "hi",callback = function(b)
+Admin2.addCommand({name = "reset2",desc = "hi",callback = function(b)
     local LP = game:GetService('Players').LocalPlayer
     local cf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
     local player = game.Players.LocalPlayer
@@ -243,7 +254,7 @@ Admin2.addCommand({name = "r2",desc = "hi",callback = function(b)
     player.Character.Animate.Disabled = false
     game.Players.LocalPlayer.CharacterAdded:Wait()
     game.Players.LocalPlayer.Character:WaitForChild "ForceField":Destroy()
-    LP.Character.HumanoidRootPart.CFrame = pos + Vector3.new(0,1,0)
+    LP.Character.HumanoidRootPart.CFrame = cf + Vector3.new(0,1,0)
     end
 end})
 
@@ -285,9 +296,6 @@ Admin2.addCommand({name = "rejoin",desc = "Rejoin Same Server",callback = functi
 end})
 
 
-Admin2.addCommand({name = "rejoin",desc = "Rejoin Same Server",callback = function(e)
-
-end})
 
 
 Admin2.addCommand({name = "shop",desc = "hi",callback = function(e)
@@ -395,6 +403,51 @@ end})
 
 
 
+Admin2.addCommand({name = "antifling",desc = "hi",callback = function(b)
+    repeat task.wait() until game:IsLoaded()
+
+    
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/crookrtk/Various_Scripts/main/flig1.lua"))()
+    
+        local PhysicsService = game:GetService("PhysicsService")
+        PhysicsService:CreateCollisionGroup("Players")
+        PhysicsService:CollisionGroupSetCollidable("Players", "Players", false)
+        
+        local function OnCharacterAdded(Chr)
+            coroutine.resume(coroutine.create(function()
+                repeat wait() until Chr:FindFirstChild("HumanoidRootPart") ~= nil
+                Chr:WaitForChild("Humanoid")
+                wait()
+                for i,v in pairs(Chr:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        PhysicsService:SetPartCollisionGroup(v, "Players")
+                    end
+                end
+            end))
+        end
+        local function OnPlayerAdded(Plr)
+            Plr.CharacterAdded:Connect(OnCharacterAdded)
+            if Plr.Character then
+                Plr.Character:WaitForChild("Humanoid")
+                OnCharacterAdded(Plr.Character)
+            end
+        end
+        
+        game:GetService("Players").PlayerAdded:Connect(OnPlayerAdded)
+        
+        for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+            OnPlayerAdded(v)
+        end
+end})
+
+
+
+
+
+Admin2.addCommand({name = "unview",desc = "hi",callback = function(b)
+    workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+
+end})
 
 
 
@@ -424,7 +477,13 @@ end})
 
 
 
-Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
+
+
+
+
+
+
+Admin2.addCommand({name = "kill",desc = "hi!",callback = function(v,b)
     local t = Admin2.getplayers(v)
     for i,v2 in pairs(t) do
         pcall(function()
@@ -460,10 +519,41 @@ Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+Admin2.addCommand({name = "view",desc = "hi!",callback = function(v,b)
+    local t = Admin2.getplayers(v)
+    for i,v2 in pairs(t) do
+        pcall(function()
+            workspace.CurrentCamera.CameraSubject = v2.Character.Humanoid
+            end)
+        
+    end
+
+
+
     
 
 
 
+    Admin2.addCommand({name = "goto",desc = "hi!",callback = function(v,b)
+        local t = Admin2.getplayers(v)
+        for i,v2 in pairs(t) do
+            pcall(function()
+                game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = v2.Character.HumanoidRootPart.CFrame - Vector3.new(0,0,-2)
+    
+                end)
+            
+        end
 
 
 
@@ -471,6 +561,8 @@ Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
 
 
 
+
+    
 
 
 
@@ -488,6 +580,25 @@ Admin2.addCommand({name = "void",desc = "hi!",callback = function(v,b)
 end})
 
 
+
+    if b then
+        local m = Instance.new("Message",workspace)
+        m.Text = "Cheese!"
+        wait(1)
+        m:Destroy()
+    end
+end})
+
+
+
+
+    if b then
+        local m = Instance.new("Message",workspace)
+        m.Text = "Cheese!"
+        wait(1)
+        m:Destroy()
+    end
+end})
 
 
 
